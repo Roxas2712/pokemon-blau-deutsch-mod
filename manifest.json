@@ -1,0 +1,21 @@
+{
+  "id": "deutsch-blau",
+  "name": "Deutsch für Pokémon Blau",
+  "version": "1.0.0",
+  "api": 2,
+  "entry": "main.lua",
+  "profile": "content",
+  "game_version": ">=0.0.0-dev <1.0.0",
+  "category": "GAMEPLAY",
+  "priority": 100,
+  "permissions": [
+    "engine_internals"
+  ],
+  "dependencies": [],
+  "optional_dependencies": [],
+  "conflicts": [],
+  "incompatible": [],
+  "experimental": false,
+  "description": "Originaltexte, Namen, Schrift und Titelgrafik der deutschen Blauen Edition für die importierte US-ROM.",
+  "github": "Roxas2712/pokemon-blau-deutsch-mod"
+}
