@@ -48,6 +48,13 @@ return function(mod)
     mod.content.font:register("charmap:" .. seq, { seq = seq, code = code })
   end
 
+  -- In-game runtime surfaces may read edition metadata directly instead of
+  -- going through Strings(). Keep those names German once the mod is active.
+  local blueInfo = GameVersion.VERSIONS.blue
+  blueInfo.label = "Blau"
+  blueInfo.displayName = "Pokémon Blaue Edition"
+  blueInfo.launcherName = "Blaue Edition"
+
   -- ---- text ---------------------------------------------------------
   local counts = {}
   counts.dialogue = each("dialogue", function(id, value)
@@ -127,6 +134,26 @@ return function(mod)
   local Font = require("src.render.Font")
   local BattleState = require("src.battle.BattleState")
 
+  local editionNames = {
+    ["Blue"] = "Blau",
+    ["BLUE"] = "BLAU",
+    ["Pokemon Blue"] = "Pokémon Blaue Edition",
+    ["Pokémon Blue"] = "Pokémon Blaue Edition",
+    ["Blue Version"] = "Blaue Edition",
+    ["BLUE VERSION"] = "BLAUE EDITION",
+    ["Blue Edition"] = "Blaue Edition",
+    ["BLUE EDITION"] = "BLAUE EDITION",
+    ["POKéMON BLUE"] = "POKéMON BLAUE EDITION",
+  }
+  local function localizeEditionName(text)
+    if type(text) ~= "string" then return text end
+    text = editionNames[text] or text
+    text = text:gsub("%f[%a]POKéMON BLUE%f[%A]", "POKéMON BLAUE EDITION")
+    text = text:gsub("%f[%a]BLUE VERSION%f[%A]", "BLAUE EDITION")
+    text = text:gsub("%f[%a]Blue Version%f[%A]", "Blaue Edition")
+    return text
+  end
+
   -- Battle HUDs read the translated statuses registry, but the party and
   -- summary menus draw mon.status (the internal PSN/SLP/etc. id) directly.
   -- Translate those exact status ids at the final font seam so every menu
@@ -134,6 +161,7 @@ return function(mod)
   if not Font.__deutschOriginalDraw then
     Font.__deutschOriginalDraw = Font.draw
     Font.draw = function(text, x, y)
+      text = localizeEditionName(text)
       if type(text) == "string" and germanStatusLabels[text] then
         text = germanStatusLabels[text]
       end

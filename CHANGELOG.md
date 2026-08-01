@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.1
+
+### Behoben
+
+- Innerhalb des laufenden Spiels werden Editionsnamen durchgängig als `Blau`,
+  `Blaue Edition` und `Pokémon Blaue Edition` angezeigt.
+
 ## 1.0.0
 
 ### Hinzugefügt
