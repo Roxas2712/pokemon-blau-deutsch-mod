@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.2
+
+### Behoben
+
+- Das klassische Kampfmenü verwendet die breitere Geometrie der deutschen
+  Originalfassung. Dadurch bleibt `FLUCHT` vollständig innerhalb des Rahmens;
+  Beschriftungen und Cursor entsprechen den deutschen ROM-Koordinaten.
+
 ## 1.0.1
 
 ### Behoben
