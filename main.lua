@@ -60,9 +60,14 @@ return function(mod)
   counts.dialogue = each("dialogue", function(id, value)
     mod.content.text:override(id, value)
   end)
-  counts.strings = each("strings", function(source, value)
-    mod.content.strings:override(source, value)
-  end)
+  local germanStrings = catalog("strings")
+  counts.strings = 0
+  for source, value in pairs(germanStrings) do
+    if type(value) == "string" and value ~= "" then
+      mod.content.strings:override(source, value)
+      counts.strings = counts.strings + 1
+    end
+  end
   -- These labels are generated dynamically by the naming screen and are
   -- therefore not present in the engine-string extraction worksheet.
   mod.content.strings:register("lower case", "klein")
@@ -100,6 +105,13 @@ return function(mod)
     mod.content.field:patch("townMap", { locations = locations })
   end
 
+  -- "NEIN" needs one more interior tile than the English "NO". Move the
+  -- shared choice box one tile left and widen it while keeping its right
+  -- edge aligned with the original screen.
+  mod.content.field:patch("theme", {
+    choiceBox = { tx = 13, ty = 7, tw = 7, th = 5 },
+  })
+
   -- TitleState accepts a direct file path for rebranded ribbons.  Its
   -- descriptor path bypasses the generated-asset resolver, so point it at
   -- the original German "BLAUE EDITION" art explicitly.
@@ -134,6 +146,29 @@ return function(mod)
   local Strings = require("src.core.Strings")
   local Font = require("src.render.Font")
   local BattleState = require("src.battle.BattleState")
+  local SlotMachine = require("src.ui.SlotMachine")
+
+  -- The slot machine owns a second hard-coded YES/NO box instead of using
+  -- Theme.choiceBox. Widen only that box during its draw call so NEIN never
+  -- overwrites the right border.
+  if not SlotMachine.__deutschOriginalDrawBottom then
+    SlotMachine.__deutschOriginalDrawBottom = SlotMachine.drawBottom
+    SlotMachine.drawBottom = function(self)
+      local originalDrawBox = Font.drawBox
+      Font.drawBox = function(tx, ty, tw, th, ...)
+        if (self.stage == "intro" or self.stage == "onemore")
+            and tx == 13 and tw == 6 and th == 5 then
+          tw = 7
+        end
+        return originalDrawBox(tx, ty, tw, th, ...)
+      end
+      local ok, err = xpcall(function()
+        SlotMachine.__deutschOriginalDrawBottom(self)
+      end, tostring)
+      Font.drawBox = originalDrawBox
+      if not ok then error(err, 0) end
+    end
+  end
 
   -- The German cartridge widens BATTLE_MENU_TEMPLATE two tiles to the left:
   -- box (6,12)-(19,17), text at (8,14), cursors at columns 7/12.  The
@@ -189,6 +224,24 @@ return function(mod)
     return text
   end
 
+  local function localizeRuntimeText(text)
+    if type(text) ~= "string" then return text end
+    text = germanStrings[text] or text
+    return localizeEditionName(text)
+  end
+
+  -- Some hand-ported screens pass raw English literals directly instead of
+  -- going through Strings(). Translate reviewed exact rows at both final
+  -- display seams; this also covers labels such as USE on older builds.
+  local TextBox = require("src.render.TextBox")
+  if not TextBox.__deutschOriginalNew then
+    TextBox.__deutschOriginalNew = TextBox.new
+    TextBox.new = function(game, text, onDone, opts)
+      return TextBox.__deutschOriginalNew(
+        game, localizeRuntimeText(text), onDone, opts)
+    end
+  end
+
   -- Battle HUDs read the translated statuses registry, but the party and
   -- summary menus draw mon.status (the internal PSN/SLP/etc. id) directly.
   -- Translate those exact status ids at the final font seam so every menu
@@ -196,7 +249,7 @@ return function(mod)
   if not Font.__deutschOriginalDraw then
     Font.__deutschOriginalDraw = Font.draw
     Font.draw = function(text, x, y)
-      text = localizeEditionName(text)
+      text = localizeRuntimeText(text)
       if type(text) == "string" and germanStatusLabels[text] then
         text = germanStatusLabels[text]
       end
@@ -234,6 +287,7 @@ return function(mod)
   }
 
   local function generatedBattleTerms(text)
+    text = localizeRuntimeText(text)
     text = text:gsub("Enemy ", "Gegn. ")
     for source, translated in pairs(battleTerms) do
       text = text:gsub("%f[%a]" .. source .. "%f[%A]", translated)

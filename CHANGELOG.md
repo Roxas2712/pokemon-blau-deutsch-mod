@@ -1,5 +1,28 @@
 # Changelog
 
+## 1.1.0
+
+### Behoben
+
+- Alle 151 Pokédex-Kategorien sind nun korrekt nach Pokémon-Art zugeordnet.
+  Dadurch erscheinen unter anderem GLUMANDA als ECHSEN-, BISASAM als SAMEN-
+  und SCHIGGY als MINIKRÖTEN-POKéMON statt mit verschobenen Kategorien.
+- Neuere Engine-Texte und rohe Laufzeitbeschriftungen werden ebenfalls
+  übersetzt; englische Rückfälle wie `USE`, `Enemy` oder der aktuelle
+  Trainerwechsel-Satz bleiben nicht mehr sichtbar.
+- Gefangene Pokémon verwenden den deutschen Artnamen auch als vorgeschlagenen
+  Standardnamen; die Levelaufstiegswerte zeigen ANGR, VERT, INIT und SPEZ.
+- Die Fenster für JA/NEIN sind sowohl allgemein als auch am Spielautomaten
+  breit genug für `NEIN`.
+- Die originale deutsche Overworld-Grafik zeigt `ARENA` statt `GYM`.
+- Die BOIS-CLUB-GAMES-Markenbezeichnung bleibt auf dem Titelbild unübersetzt
+  und passt wieder in die vorgesehene Zeile.
+
+### Getestet
+
+- Neuer ROM-freier Regressionstest für Artennamen, Pokédex-Kategorien,
+  Kampftexte, Laufzeitbeschriftungen und Fenstergeometrie.
+
 ## 1.0.2
 
 ### Behoben

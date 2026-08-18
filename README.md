@@ -1,7 +1,7 @@
 # Deutsch für Pokémon Blau
 
 Diese Mod macht die kanonische US-ROM in Gen1Recomp auf Deutsch spielbar.
-Aktuelle Version: **1.0.2**.
+Aktuelle Version: **1.1.0**.
 
 Die Inhalte wurden nicht maschinell übersetzt: Dialoge, Pokédex-Texte, Namen,
 Schriftzeichen und die Titelgrafik stammen aus der unveränderten deutschen
@@ -17,6 +17,7 @@ im Game-Boy-Original nicht existieren, wurden separat übersetzt.
 - deutsche Menüs sowie übersetzte Gen1Recomp-Zusatzoberflächen
 - deutsche Kampftexte einschließlich Trainerwechsel und Gegnerbezeichnung
 - deutsche Status- und Wertekürzel wie GIF, ANGR, VERT, INIT und SPEZ
+- deutsche Overworld-Schilder wie „ARENA“ statt „GYM“
 - alle 151 Pokémon und 165 Attacken
 
 ## Bilder
@@ -29,7 +30,7 @@ im Game-Boy-Original nicht existieren, wurden separat übersetzt.
 
 ## Installation
 
-1. Unter **Releases** die Datei `deutsch-blau-1.0.2.zip` herunterladen.
+1. Unter **Releases** die Datei `deutsch-blau-1.1.0.zip` herunterladen.
 2. In Gen1Recomp **MODS > Import mod .zip** öffnen.
 3. Das Archiv auswählen, die Mod aktivieren und das Spiel neu starten.
 
