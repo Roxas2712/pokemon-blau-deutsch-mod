@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.1.1
+
+### Behoben
+
+- Das Release-Archiv wird unter dem vom Launcher erwarteten kanonischen Namen
+  `deutsch-blau-1.1.1.zip` bereitgestellt.
+- Tests und Screenshots werden nicht mehr in das installierbare Mod-Archiv
+  aufgenommen. Die Laufzeitinhalte bleiben gegenüber 1.1.0 unverändert.
+
 ## 1.1.0
 
 ### Behoben
