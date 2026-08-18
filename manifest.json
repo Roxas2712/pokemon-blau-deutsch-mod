@@ -4,6 +4,7 @@
   "version": "1.1.0",
   "api": 2,
   "entry": "main.lua",
+  "assets_transforms": "transforms.lua",
   "profile": "content",
   "game_version": ">=0.0.0-dev <1.0.0",
   "category": "GAMEPLAY",

@@ -14,7 +14,8 @@
   Standardnamen; die Levelaufstiegswerte zeigen ANGR, VERT, INIT und SPEZ.
 - Die Fenster für JA/NEIN sind sowohl allgemein als auch am Spielautomaten
   breit genug für `NEIN`.
-- Die originale deutsche Overworld-Grafik zeigt `ARENA` statt `GYM`.
+- Ein ROM-freier Grafik-Transform zeichnet `ARENA` statt `GYM` direkt auf
+  das vom Spieler importierte Overworld-Tileset.
 - Die BOIS-CLUB-GAMES-Markenbezeichnung bleibt auf dem Titelbild unübersetzt
   und passt wieder in die vorgesehene Zeile.
 
