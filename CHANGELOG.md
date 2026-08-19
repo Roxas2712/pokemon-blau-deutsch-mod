@@ -1,5 +1,16 @@
 # Changelog
 
+## Unveröffentlicht
+
+### Behoben
+
+- Der Raupen-Pokémon-Dialog in Vertania City verwendet auch für die fest in
+  Gen1Recomp hinterlegten Antworten die offiziellen deutschen Texte.
+- Das Titelbild unterdrückt den segmentierten Engine-Schriftzug vollständig,
+  bevor `BLAUE EDITION` einmal als zusammenhängendes Band gezeichnet wird.
+  Dadurch erscheinen beim Wechsel des Titel-Pokémon keine zusätzlichen
+  Buchstaben aus dem Engine-Band.
+
 ## 1.1.1
 
 ### Behoben

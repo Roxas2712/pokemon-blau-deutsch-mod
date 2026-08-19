@@ -68,6 +68,11 @@ return function(mod)
       counts.strings = counts.strings + 1
     end
   end
+  local runtimeText = catalog("runtime_text")
+  counts.runtimeText = 0
+  for _ in pairs(runtimeText) do
+    counts.runtimeText = counts.runtimeText + 1
+  end
   -- These labels are generated dynamically by the naming screen and are
   -- therefore not present in the engine-string extraction worksheet.
   mod.content.strings:register("lower case", "klein")
@@ -121,18 +126,26 @@ return function(mod)
   })
 
   -- Red/Blue's renderer normally selects only the "Red" and "Version"
-  -- portions of a shared English ribbon.  German Blue stores "BLAUE EDITION"
-  -- across all ten tiles, so redraw that complete original strip.
+  -- portions of a shared English ribbon. German Blue stores "BLAUE EDITION"
+  -- across all ten tiles. Hide the ribbon from the base draw and render the
+  -- complete strip exactly once; painting over the segmented base rendering
+  -- let its leading tiles reappear during the title-Pokemon scroll-in.
   local TitleState = require("src.ui.TitleState")
   if not TitleState.__deutschOriginalDraw then
     TitleState.__deutschOriginalDraw = TitleState.draw
     TitleState.draw = function(self)
-      TitleState.__deutschOriginalDraw(self)
-      if self.title and self.title.germanFullVersionRibbon
-          and self.version and not self.yellow then
+      local fullRibbon = self.title and self.title.germanFullVersionRibbon
+        and self.version and not self.yellow
+      local version = self.version
+      if fullRibbon then self.version = nil end
+      local ok, err = xpcall(function()
+        TitleState.__deutschOriginalDraw(self)
+      end, tostring)
+      self.version = version
+      if not ok then error(err, 0) end
+      if fullRibbon then
         love.graphics.setColor(1, 1, 1, 1)
-        love.graphics.rectangle("fill", 48, 64, 80, 8)
-        love.graphics.draw(self.version, 48, 64)
+        love.graphics.draw(version, 48, 64)
       end
       love.graphics.setColor(1, 1, 1, 1)
     end
@@ -226,7 +239,7 @@ return function(mod)
 
   local function localizeRuntimeText(text)
     if type(text) ~= "string" then return text end
-    text = germanStrings[text] or text
+    text = runtimeText[text] or germanStrings[text] or text
     return localizeEditionName(text)
   end
 

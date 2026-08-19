@@ -79,7 +79,46 @@ TextBox.__deutschOriginalNew = function(_, text)
 end
 TextBox.new({}, "USE")
 T.eq(capturedText, "OK", "raw TextBox USE is localized")
+TextBox.new({},
+  "CATERPIE has no\npoison, but\vWEEDLE does.\fWatch out for its\nPOISON STING!")
+T.eq(capturedText,
+  "RAUPY ist nicht\ngiftig, aber\vHORNLIU!\fAchte auf seinen\nGIFTSTACHEL!",
+  "Viridian caterpillar fallback is localized")
+TextBox.new({}, "Oh, OK then!")
+T.eq(capturedText, "OK, alles klar!",
+  "Viridian negative answer fallback is localized")
 TextBox.__deutschOriginalNew = originalNew
+
+local TitleState = require("src.ui.TitleState")
+local storedBaseDraw = TitleState.__deutschOriginalDraw
+local storedGraphicsDraw = love.graphics.draw
+local baseSawVersion, ribbonDraws, ribbonX, ribbonY
+local ribbon = {}
+TitleState.__deutschOriginalDraw = function(state)
+  baseSawVersion = state.version
+  if state.version then love.graphics.draw(state.version, 56, 64) end
+end
+love.graphics.draw = function(image, x, y, ...)
+  if image == ribbon then
+    ribbonDraws = (ribbonDraws or 0) + 1
+    ribbonX, ribbonY = x, y
+  end
+  return storedGraphicsDraw(image, x, y, ...)
+end
+local titleState = {
+  title = { germanFullVersionRibbon = true },
+  version = ribbon,
+  yellow = false,
+}
+TitleState.draw(titleState)
+love.graphics.draw = storedGraphicsDraw
+TitleState.__deutschOriginalDraw = storedBaseDraw
+T.eq(baseSawVersion, nil,
+  "base title renderer cannot redraw segmented German ribbon")
+T.eq(titleState.version, ribbon, "title ribbon is restored after base draw")
+T.eq(ribbonDraws, 1, "complete German title ribbon is drawn exactly once")
+T.eq(ribbonX, 48, "complete German title ribbon uses full-strip x")
+T.eq(ribbonY, 64, "complete German title ribbon stays on title row")
 
 local slotWidth
 local originalDrawBox = Font.drawBox
