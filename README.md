@@ -1,5 +1,13 @@
 # Deutsch für Pokémon Blau
 
+> **Eingestellt / archiviert:** Diese editionsspezifische Einzel-Mod erhält
+> keine weiteren Updates. Die gepflegte Nachfolgeversion ist
+> **Translation German Universal**, die Pokémon Rot, Blau, Gelb, Gold und
+> Silber in einer einzigen Mod abdeckt.
+>
+> - [Universal-Repository](https://github.com/Roxas2712/translation-german-universal)
+> - [Neueste Universal-Veröffentlichung](https://github.com/Roxas2712/translation-german-universal/releases/latest)
+
 Diese Mod macht die kanonische US-ROM in Gen1Recomp auf Deutsch spielbar.
 Aktuelle Version: **1.1.1**.
 

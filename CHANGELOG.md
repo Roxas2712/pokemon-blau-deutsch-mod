@@ -1,5 +1,15 @@
 # Changelog
 
+## Unveröffentlicht – Stilllegung
+
+- Diese editionsspezifische Einzel-Mod wird nicht mehr weiterentwickelt; das
+  Repository bleibt als Archiv der bisherigen Veröffentlichungen erhalten.
+- Die gepflegte Nachfolgeversion ist
+  [Translation German Universal](https://github.com/Roxas2712/translation-german-universal).
+  Die jeweils neueste Veröffentlichung ist über
+  [GitHub Releases](https://github.com/Roxas2712/translation-german-universal/releases/latest)
+  verfügbar.
+
 ## 1.1.1
 
 ### Behoben
